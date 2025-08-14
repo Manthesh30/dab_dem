@@ -1,0 +1,13 @@
+resources:
+  jobs:
+    dab_job:
+      name: dab_job
+      tasks:
+        - task_key: demo_notebook
+          notebook_task:
+            notebook_path: ../notebook/demo_ntbk.py
+            source: WORKSPACE
+          existing_cluster_id: 0425-120300-o23f1f62
+      queue:
+        enabled: true
+
