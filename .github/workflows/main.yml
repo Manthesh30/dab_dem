@@ -1,20 +1,21 @@
-name: new_one
+name: deploy_to_dev
 
-concurrency: 1
+concurrency: deploy_to_dev # ensures only one deploy runs at a time
 
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main   # Run when changes are pushed to main branch
+  workflow_dispatch: # Manual trigger still available
 
 env:
   DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-  ARM_CLIENT_ID: ${{ secrets.SPN_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.SPN_CLIENT_SECRET }}
-  ARM_TENANT_ID: ${{ secrets.TENANT_ID}}
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
 jobs:
   deploy:
     environment: dev
-    name: "Deploy bundle"
+    name: "Deploy Bundle to Dev"
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +26,13 @@ jobs:
         uses: databricks/setup-cli@main
 
       - name: Validate Databricks Bundle
-        working-directory: dab_demo
+        working-directory: demo_bundle
         run: databricks bundle validate 
         env:
           DATABRICKS_BUNDLE_ENV: dev
 
       - name: Deploy Databricks Bundle
-        working-directory: dab_demo
+        working-directory: demo_bundle
         run: databricks bundle deploy --auto-approve
         env:
           DATABRICKS_BUNDLE_ENV: dev
