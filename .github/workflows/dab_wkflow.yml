@@ -1,0 +1,38 @@
+name: deploy_to_dev_dab
+
+concurrency: 1
+
+on:
+
+  workflow_dispatch
+
+env:
+  DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+jobs:
+  deploy:
+    environment: dev
+    name: "Deploy Bundle to Dev Dab"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: databricks/setup-cli@main
+      
+      - name: Validate Databricks Bundle
+        working-directory: dab_demo
+      - run: databricks bundle validate 
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
+          
+      - name: Deploy Databricks Bundle   
+        working-directory: dab_demo
+      - run: databricks bundle deploy 
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
