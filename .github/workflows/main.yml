@@ -26,13 +26,13 @@ jobs:
         uses: databricks/setup-cli@main
 
       - name: Validate Databricks Bundle
-        working-directory: dab_dem
+        working-directory: dab_demo
         run: databricks bundle validate 
         env:
           DATABRICKS_BUNDLE_ENV: dev
 
       - name: Deploy Databricks Bundle
-        working-directory: dab_dem
+        working-directory: dab_demo
         run: databricks bundle deploy --auto-approve
         env:
           DATABRICKS_BUNDLE_ENV: dev
