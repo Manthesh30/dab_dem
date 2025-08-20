@@ -18,12 +18,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: databricks/setup-cli@main
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
 
-      - run: |
-          databricks bundle validate -t "dev" --var="env=dev"
+      - name: Validate Databricks Bundle
+        working-directory: demo_bundle
+        run: databricks bundle validate 
+        env:
+          DATABRICKS_BUNDLE_ENV: dev
 
-      - run: |
-          databricks bundle deploy -t "dev" --var="env=dev"
+      - name: Deploy Databricks Bundle
+        working-directory: demo_bundle
+        run: databricks bundle deploy --auto-approve
+        env:
+          DATABRICKS_BUNDLE_ENV: dev
