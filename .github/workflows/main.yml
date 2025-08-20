@@ -1,6 +1,6 @@
-name: deploy_to_dev
+name: deploy_to_dev_dab
 
-concurrency: deploy_to_dev # ensures only one deploy runs at a time
+concurrency: deploy_to_dev_dab # ensures only one deploy runs at a time
 
 on:
   push:
@@ -26,13 +26,13 @@ jobs:
         uses: databricks/setup-cli@main
 
       - name: Validate Databricks Bundle
-        working-directory: demo_bundle
+        working-directory: dab_demo
         run: databricks bundle validate 
         env:
           DATABRICKS_BUNDLE_ENV: dev
 
       - name: Deploy Databricks Bundle
-        working-directory: demo_bundle
+        working-directory: dab_demo
         run: databricks bundle deploy --auto-approve
         env:
           DATABRICKS_BUNDLE_ENV: dev
