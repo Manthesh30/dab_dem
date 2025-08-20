@@ -23,16 +23,12 @@ jobs:
       
       - name: Validate Databricks Bundle
         working-directory: dab_demo
-      - run: databricks bundle validate 
+        run: databricks bundle validate 
         env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
-          
-      - name: Deploy Databricks Bundle   
+
+      - name: Deploy Databricks Bundle
         working-directory: dab_demo
-      - run: databricks bundle deploy 
+        run: databricks bundle deploy 
         env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
