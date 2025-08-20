@@ -16,7 +16,7 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-777862349969176.16.azuredatabricks.net
+      host: https://adb-777862349969176.16.azuredatabricks.net/
 
   # The 'prod' target, used for production deployment.
   # prod:
