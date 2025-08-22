@@ -3,8 +3,10 @@ name: deploy_to_dev_dab
 concurrency: 1
 
 on:
-
-  workflow_dispatch
+  push:
+    branches:
+      - main   # Run when changes are pushed to main branch
+  workflow_dispatch:
 
 env:
   DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
